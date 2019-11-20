@@ -1,0 +1,11 @@
+output "data" {
+  value = {
+    ec2_instance_type = "t2.xlarge"
+    regions = [
+      "us-east-1",
+      "us-west-2",
+      "eu-central-1",
+      "ap-east-1",
+    ]
+  }
+}

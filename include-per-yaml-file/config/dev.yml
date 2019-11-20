@@ -1,0 +1,4 @@
+---
+# use config from _defaults
+
+_: # Needs some dummy content to show TF this file is meant to contain a map
