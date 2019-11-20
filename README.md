@@ -23,6 +23,8 @@ Below are 3 solutions which all have the same exact outcome. The defined config 
 
 All 3 solutions support default values, so you're not required to define every config option in every environment.
 
+All examples are available in [this repository](https://github.com/udondan/example-terraform-workspace-config).
+
 ### 1. Inline expressions to select correct config from a map
 
 ```hcl
@@ -73,7 +75,7 @@ locals {
 
 ### 2. Load config from YAML files
 
-Directory structure:
+[Directory structure:](https://github.com/udondan/example-terraform-workspace-config/tree/master/include-per-yaml-file)
 
 ```tree
 .
@@ -86,7 +88,7 @@ Directory structure:
 ├── main.tf
 ```
 
-Example content of `config/production.yml`:
+Example content of [`config/production.yml`](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-yaml-file/config/production.yml):
 
 ```yaml
 ---
@@ -99,7 +101,7 @@ regions:
   - ap-east-1
 ```
 
-The config is loaded in `config.yml`:
+The config is loaded in [`config.yml`](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-yaml-file/config.tf):
 
 ```hcl
 data "local_file" "defaults" {
@@ -129,7 +131,7 @@ locals {
 
 ### 3. Create a module per environment and return the config as an output
 
-Directory structure:
+[Directory structure:](https://github.com/udondan/example-terraform-workspace-config/tree/master/include-per-module)
 
 ```tree
 .
@@ -148,7 +150,7 @@ Directory structure:
 
 In every `config/$env/outputs.tf` a single output is defined like this:
 
-config/_defaults/outputs.tf:
+[`config/_defaults/outputs.tf`](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-module/config/_defaults/outputs.tf):
 
 ```hcl
 output "data" {
@@ -161,7 +163,7 @@ output "data" {
 }
 ```
 
-config/dev/outputs.tf:
+[config/dev/outputs.tf](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-module/config/dev/outputs.tf):
 
 ```hcl
 output "data" {
@@ -169,7 +171,7 @@ output "data" {
 }
 ```
 
-config/staging/outputs.tf:
+[config/staging/outputs.tf](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-module/config/staging/outputs.tf):
 
 ```hcl
 output "data" {
@@ -184,7 +186,7 @@ output "data" {
 
 ```
 
-config/production/outputs.tf:
+[config/production/outputs.tf](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-module/config/production/outputs.tf):
 
 ```hcl
 output "data" {
@@ -202,7 +204,7 @@ output "data" {
 
 Since you cannot use variables in a module `source` parameter all 4 modules have to be defined in every environment. Furthermore you cannot directly access a module by name when the name is not hardcoded, so you need to additionally create a mapping like so:
 
-config/main.tf:
+[config/main.tf](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-module/config/main.tf):
 
 ```hcl
 module "_defaults" {
@@ -237,7 +239,7 @@ output "data" {
 }
 ```
 
-In the `main.tf` then the module needs to be loaded and for convenience the output gets registered as a local value:
+In the [`main.tf`](https://github.com/udondan/example-terraform-workspace-config/blob/master/include-per-module/main.tf) then the module needs to be loaded and for convenience the output gets registered as a local value:
 
 ```hcl
 module "config" {
