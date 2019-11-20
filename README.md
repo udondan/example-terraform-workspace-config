@@ -27,6 +27,8 @@ All examples are available in [this repository](https://github.com/udondan/examp
 
 ### 1. Inline expressions to select correct config from a map
 
+All config is held is a single file [`config.tf`](https://github.com/udondan/example-terraform-workspace-config/blob/master/inline-locals/config.tf):
+
 ```hcl
 locals {
   configs = {
